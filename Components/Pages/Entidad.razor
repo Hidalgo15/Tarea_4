@@ -1,0 +1,55 @@
+@page "/entidad/{tipo}"
+@inject NavigationManager NavMan
+@inject SerieContext Sc
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore;
+<h1 class="text-center">@Tipo</h1>
+
+<div class="text-end me-3">
+    <buttom class="btn btn-primary" @onclick="Agregar">Agregar @Tipo</buttom>
+</div>
+
+
+
+@code{
+    
+    [Parameter]
+
+    public string Tipo {get; set;} = "";
+    List<SeriePeliculasLibro> Lista = new List<SeriePeliculasLibro>();
+
+    Tipo_Entidad Entidad_Tipo;
+
+    protected override void OnParametersSet(){
+        switch(Tipo){
+            case "libros":
+            Entidad_Tipo = Tipo_Entidad.Libro;
+            break;
+            case "peliculas":
+            Entidad_Tipo = Tipo_Entidad.Pelicula;
+            break;
+            case "series":
+            Entidad_Tipo = Tipo_Entidad.Serie;
+            break;
+        }
+    }
+
+    private void Agregar(){
+        NavMan.NavigateTo($"entidad/{Tipo}/editar");
+    }
+
+    private void Editar(int id){
+        NavMan.NavigateTo($"entidad/{Tipo}/editar/{id}");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender){
+
+        if(firstRender){
+            Lista = await Sc.SeriePeliculasLibros.Where(x => x.Tipo == Entidad_Tipo).ToListAsync();
+            StateHasChanged();
+        }
+
+    }
+
+
+}

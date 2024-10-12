@@ -1,0 +1,136 @@
+@page "/entidad/{tipo}/editar"
+@page "/entidad/{tipo}/editar/{Id:int}"
+@inject NavigationManager NavMan
+@inject IJSRuntime JSx
+@inject SerieContext Sc
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore;
+
+<h3 class="text-center mb-3">Editanto @Tipo</h3>
+
+
+<EditForm Model="instancia" OnValidSubmit="GuardarDatos">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+<div class="container">
+<div class="form-group mb-3">
+    <label for="Nombre">Nombre:</label>
+    <InputText id="Nombre" class="form-control" @bind-Value="instancia.Nombre" />
+</div>
+
+<div class="form-group mb-3">
+    <label for="Pais">País:</label>
+    <InputText id="Pais" class="form-control" @bind-Value="instancia.Pais" />
+</div>
+
+<div class="form-group mb-3">
+    <label for="Idioma">Idioma:</label>
+    <InputText id="Idioma" class="form-control" @bind-Value="instancia.Lenguage" />
+</div>
+
+<div class="form-group mb-3">
+    <label for="Foto">Foto:</label>
+    <input type="url" id="Foto" class="form-control" @bind="instancia.PhotoUrl" />
+</div>
+
+<div class="form-group mb-3">
+    <label for="Resumen">Resumen:</label>
+    <InputTextArea id="Resumen" class="form-control" @bind-Value="instancia.Resumen" />
+</div>
+</div>
+
+
+<h4 class="text-center" >Personajes</h4>
+
+<table class= "table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Apodo</th>
+            <th>Raza</th>
+            <th>Foto</th>
+            <th>Edad</th>
+            <th>Poder Caracteristico</th>
+            <td>
+                <button type="button" class="btn btn-primary" @onclick="Agregar_Personaje">Agregar personaje</button>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in instancia.personajes){
+            <tr>
+                <td><img style="height: 70px" src="@item.Foto" alt="@item.Foto" /></td>
+                <td><InputText @bind-Value="item.Nombre" class="form-control" /></td>
+                <td><InputText @bind-Value="item.Apodo" class="form-control" /></td>
+                <td><InputText @bind-Value="item.Raza" class="form-control" /></td>
+                <td><InputText @bind-Value="item.Foto" class="form-control" /></td>
+                <td><InputNumber @bind-Value="item.Edad" class="form-control" /></td>
+                <td><InputText @bind-Value="item.Poder_caracteristico" class="form-control" /></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-center mb-3">
+    <button type="Submit" class="btn btn-primary">Guardar</button>
+</div>
+
+</EditForm>
+
+
+@code{
+    [Parameter]
+public String Tipo {get; set;}="";
+
+ [Parameter]
+    public int Id {get; set;} = 0;
+
+
+SeriePeliculasLibro instancia = new SeriePeliculasLibro();
+
+    Tipo_Entidad Entidad_Tipo;
+
+
+    async Task GuardarDatos(){
+
+        instancia.Tipo = Entidad_Tipo;
+
+        Console.WriteLine("Se guardo");
+        if(instancia.Id > 0){
+            Sc.SeriePeliculasLibro.Update(instancia);
+        }
+        else{
+            Sc.SeriePeliculasLibro.Add(instancia);
+        }
+        await Sc.SaveChangesAsync();
+        await JSx.InvokeVoidAsync("alert", "Se guardo correctamente");
+        NavMan.NavigateTo($"/entidad/{Tipo}");
+        
+
+    }
+
+     protected override async Task OnAfterRenderAsync(bool firstRender){
+
+        if(firstRender){
+
+            if(Id > 0){
+
+                instancia = await Sc.SeriePeliculasLibro.FirstOrDefaultAsync(x => x.Id == Id)?? new SeriePeliculasLibro();
+                StateHasChanged();
+
+            }
+            
+        }
+
+    }
+
+
+    private void Agregar_Personaje(){
+        instancia.personajes.Add(new Personaje());
+        StateHasChanged();
+
+    }
+
+
+}
