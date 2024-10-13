@@ -9,6 +9,34 @@
     <buttom class="btn btn-primary" @onclick="Agregar">Agregar @Tipo</buttom>
 </div>
 
+<p><strong>Agregados</strong></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Pais</th>
+            <th>Idioma</th>
+            <th>Resumen</th>
+            <th>Foto</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var item in Lista){
+         <tr>
+            <td>@item.Nombre</td>
+            <td>@item.Pais</td>
+            <td>@item.Lenguage</td>
+            <td>@item.Resumen</td>
+            <td><img src ="@item.PhotoUrl" alt ="@item.Nombre" width="100"/> </td>
+        </tr>
+        }
+
+    </tbody>
+
+</table>
+
 
 
 @code{
@@ -22,13 +50,13 @@
 
     protected override void OnParametersSet(){
         switch(Tipo){
-            case "libros":
+            case "libro":
             Entidad_Tipo = Tipo_Entidad.Libro;
             break;
-            case "peliculas":
+            case "pelicula":
             Entidad_Tipo = Tipo_Entidad.Pelicula;
             break;
-            case "series":
+            case "serie":
             Entidad_Tipo = Tipo_Entidad.Serie;
             break;
         }
@@ -37,19 +65,26 @@
     private void Agregar(){
         NavMan.NavigateTo($"entidad/{Tipo}/editar");
     }
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (firstRender)
+    {
+        Console.WriteLine($"Valor de Entidad_Tipo: {Entidad_Tipo}");
+        try
+        {
+            Lista = await Sc.SeriePeliculasLibros
+                .Where(x => x.Tipo == Entidad_Tipo)
+                .ToListAsync();
 
-    private void Editar(int id){
-        NavMan.NavigateTo($"entidad/{Tipo}/editar/{id}");
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender){
-
-        if(firstRender){
-            Lista = await Sc.SeriePeliculasLibros.Where(x => x.Tipo == Entidad_Tipo).ToListAsync();
-            StateHasChanged();
+            Console.WriteLine($"Número de elementos en la lista: {Lista.Count}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar los datos: {ex.Message}");
         }
 
+
+        StateHasChanged();
     }
-
-
+}
 }

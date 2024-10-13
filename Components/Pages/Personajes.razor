@@ -5,3 +5,55 @@
 
 
 <h1 class="text-center">Personajes</h1>
+
+
+
+@code{
+    
+    [Parameter]
+
+    public string Tipo {get; set;} = "";
+    List<SeriePeliculasLibro> Lista = new List<SeriePeliculasLibro>();
+
+    Tipo_Entidad Entidad_Tipo;
+
+    protected override void OnParametersSet(){
+        switch(Tipo){
+            case "libros":
+            Entidad_Tipo = Tipo_Entidad.Libro;
+            break;
+            case "peliculas":
+            Entidad_Tipo = Tipo_Entidad.Pelicula;
+            break;
+            case "series":
+            Entidad_Tipo = Tipo_Entidad.Serie;
+            break;
+        }
+    }
+
+   // private void Agregar(){
+  //      NavMan.NavigateTo($"entidad/{Tipo}/editar");
+  //  }
+protected override async Task OnAfterRenderAsync(bool firstRender)
+{
+    if (firstRender)
+    {
+        Console.WriteLine($"Valor de Entidad_Tipo: {Entidad_Tipo}");
+        try
+        {
+            Lista = await Sc.SeriePeliculasLibros
+                .Where(x => x.Tipo == Entidad_Tipo)
+                .ToListAsync();
+
+            Console.WriteLine($"Número de elementos en la lista: {Lista.Count}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar los datos: {ex.Message}");
+        }
+
+
+        StateHasChanged();
+    }
+}
+}

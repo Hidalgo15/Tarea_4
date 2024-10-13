@@ -98,10 +98,10 @@ SeriePeliculasLibro instancia = new SeriePeliculasLibro();
 
         Console.WriteLine("Se guardo");
         if(instancia.Id > 0){
-            Sc.SeriePeliculasLibro.Update(instancia);
+            Sc.SeriePeliculasLibros.Update(instancia);
         }
         else{
-            Sc.SeriePeliculasLibro.Add(instancia);
+            Sc.SeriePeliculasLibros.Add(instancia);
         }
         await Sc.SaveChangesAsync();
         await JSx.InvokeVoidAsync("alert", "Se guardo correctamente");
@@ -116,7 +116,7 @@ SeriePeliculasLibro instancia = new SeriePeliculasLibro();
 
             if(Id > 0){
 
-                instancia = await Sc.SeriePeliculasLibro.FirstOrDefaultAsync(x => x.Id == Id)?? new SeriePeliculasLibro();
+                instancia = await Sc.SeriePeliculasLibros.FirstOrDefaultAsync(x => x.Id == Id)?? new SeriePeliculasLibro();
                 StateHasChanged();
 
             }
