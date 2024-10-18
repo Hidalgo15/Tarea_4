@@ -1,7 +1,40 @@
 ﻿@page "/"
+@inject NavigationManager NavMan
+@inject SerieContext Sc
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore;
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Inicio</PageTitle>
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<h3 class="text-center">Películas, Series y Libros</h3>
+
+
+<div class="row">
+    @foreach (var item in Lista)
+    {
+        <div class="col-md-3">
+            <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+                <img class="card-img-top fixed-img" src="@item.PhotoUrl" alt="Imagen de @item.Nombre" />
+                <h5 class="card-title text-center mb-2">@item.Nombre</h5>
+                <p class="card-text"><strong>Tipo:</strong> @item.Tipo</p>
+                <p class="card-text"><strong>País:</strong> @item.Pais</p>
+                <p class="card-text"><strong>Idioma:</strong> @item.Lenguage</p>                    
+                <p class="card-text flex-grow-1">@item.Resumen</p>
+                <p class="card-text"><strong>Protagonistas:</strong> @item.personajes.Count</p> 
+            </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    List<SeriePeliculasLibro> Lista = new List<SeriePeliculasLibro>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+        Lista = await Sc.SeriePeliculasLibros.Include(x => x.personajes).ToListAsync();
+    }
+}
