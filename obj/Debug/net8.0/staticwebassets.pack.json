@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\Tarea_4.bundle.scp.css"
     },
     {
+      "Id": "C:\\Programacion web, trabajos\\Tarea_4\\wwwroot\\Imagenes\\Yo,Brazor.jpg",
+      "PackagePath": "staticwebassets\\Imagenes\\Yo,Brazor.jpg"
+    },
+    {
       "Id": "C:\\Programacion web, trabajos\\Tarea_4\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },

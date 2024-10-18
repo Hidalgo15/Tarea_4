@@ -131,3 +131,4 @@ C:\Programacion web, trabajos\Tarea_4\obj\Debug\net8.0\Tarea_4.pdb
 C:\Programacion web, trabajos\Tarea_4\obj\Debug\net8.0\Tarea_4.genruntimeconfig.cache
 C:\Programacion web, trabajos\Tarea_4\obj\Debug\net8.0\ref\Tarea_4.dll
 C:\Programacion web, trabajos\Tarea_4\obj\Debug\net8.0\Tarea_4.sourcelink.json
+C:\Programacion web, trabajos\Tarea_4\obj\Debug\net8.0\scopedcss\Components\Pages\Acerca_de.razor.rz.scp.css

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZYYtrIhXlAq3wfjvINS+TJ984uHjYcTRXSBUwO9qdbc=",
+  "Hash": "BhoQ9IiHPvNm7RDVt724Emj/bPysrnZ/ofRIlzyeiTE=",
   "Source": "Tarea_4",
   "BasePath": "_content/Tarea_4",
   "Mode": "Default",
@@ -129,6 +129,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.png"
+    },
+    {
+      "Identity": "C:\\Programacion web, trabajos\\Tarea_4\\wwwroot\\Imagenes\\Yo,Brazor.jpg",
+      "SourceId": "Tarea_4",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Programacion web, trabajos\\Tarea_4\\wwwroot\\",
+      "BasePath": "_content/Tarea_4",
+      "RelativePath": "Imagenes/Yo,Brazor.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Imagenes\\Yo,Brazor.jpg"
     }
   ]
 }
